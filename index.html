@@ -316,23 +316,24 @@
           currentInputBuffer.value = '';
           typedRomaji.value = '';
           
-          // 頭にスペースがあればスキップしてから最初の候補を取得
           skipSpaces();
           if (currentChunkIdx.value < kanaChunks.value.length) {
              validPaths.value = getPathsForChunk(currentChunkIdx.value);
           }
 
-          try {
-            currentAudio = new Audio(currentPlayer.value.bgm_file);
-            currentAudio.play().catch(e => console.warn("音声再生エラー:", e));
-          } catch (error) {
-            console.error("音声読み込みエラー:", error);
-          }
-
+          // ★修正：準備画面では音を鳴らさず、テキストが表示されるタイミングで音声を再生する
           timeoutId = setTimeout(() => {
             isIntroPlaying.value = false;
             showAnnouncement.value = true;
-          }, currentPlayer.value.bgm_delay_ms);
+
+            // 画面切り替えと同時に音楽スタート
+            try {
+              currentAudio = new Audio(currentPlayer.value.bgm_file);
+              currentAudio.play().catch(e => console.warn("音声再生エラー:", e));
+            } catch (error) {
+              console.error("音声読み込みエラー:", error);
+            }
+          }, currentPlayer.value.bgm_delay_ms); // players.jsで設定した秒数（2000なら2秒）だけ待機する
         };
 
         const nextPlayer = () => {

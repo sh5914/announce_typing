@@ -40,26 +40,26 @@ const playersData = [
     typing_kana: "ろくばん せかんどべーすまん まきはらたいせい<br>せばんごうはち ふくおかけんくるめししゅっしん",
     bgm_file: "audio/makihara_cut.mp3",
     bgm_delay_ms: 1000
-  // },
-  // {
-  //   id: "player_shuto",
-  //   display_text: "7番 センターフィールダー 周東右京<br>背番号23 群馬県太田市出身",
-  //   typing_kana: "ななばん せんたーふぃーるだー しゅうとううきょう<br>せばんごうにじゅうさん ぐんまけんおおたししゅっしん",
-  //   bgm_file: "audio/shuto.mp3",
-  //   bgm_delay_ms: 1000
-  // },
-  // {
-  //   id: "player_umino",
-  //   display_text: "8番 キャッチャー 海野隆司<br>背番号62 岡山県岡山市出身",
-  //   typing_kana: "はちばん きゃっちゃー うみのたかし<br>せばんごうろくじゅうに おかやまけんおかやまししゅっしん",
-  //   bgm_file: "audio/umino.mp3",
-  //   bgm_delay_ms: 1000
-  // },
-  // {
-  //   id: "player_nomura",
-  //   display_text: "9番 ショートストップ 野村勇<br>背番号99 兵庫県神戸市出身",
-  //   typing_kana: "きゅうばん しょーとすとっぷ のむらいさみ<br>せばんごうきゅうじゅうきゅう ひょうごけんこうべししゅっしん",
-  //   bgm_file: "audio/nomura.mp3",
-  //   bgm_delay_ms: 1000
+  },
+  {
+    id: "player_shuto",
+    display_text: "7番 センターフィールダー 周東右京<br>背番号23 群馬県太田市出身",
+    typing_kana: "ななばん せんたーふぃーるだー しゅうとううきょう<br>せばんごうにじゅうさん ぐんまけんおおたししゅっしん",
+    bgm_file: "audio/shuto_cut.mp3",
+    bgm_delay_ms: 1000
+  },
+  {
+    id: "player_umino",
+    display_text: "8番 キャッチャー 海野隆司<br>背番号62 岡山県岡山市出身",
+    typing_kana: "はちばん きゃっちゃー うみのたかし<br>せばんごうろくじゅうに おかやまけんおかやまししゅっしん",
+    bgm_file: "audio/umino_cut.mp3",
+    bgm_delay_ms: 1000
+  },
+  {
+    id: "player_nomura",
+    display_text: "9番 ショートストップ 野村勇<br>背番号99 兵庫県神戸市出身",
+    typing_kana: "きゅうばん しょーとすとっぷ のむらいさみ<br>せばんごうきゅうじゅうきゅう ひょうごけんこうべししゅっしん",
+    bgm_file: "audio/isami_cut.mp3",
+    bgm_delay_ms: 1000
   }
 ];

@@ -23,7 +23,7 @@ const playersData = [
   {
     id: "player_kurihara",
     display_text: "4番 サードベースマン 栗原陵矢<br>背番号24 福井県福井市出身",
-    typing_kana: "よんばん さーどべーすまん くりはらりょうや<br>せばんごうにじゅうよん ふくいけんふくいししゅっしん",
+    typing_kana: "よばん さーどべーすまん くりはらりょうや<br>せばんごうにじゅうよん ふくいけんふくいししゅっしん",
     bgm_file: "audio/kurihara_cut.mp3",
     bgm_delay_ms: 1000
   },

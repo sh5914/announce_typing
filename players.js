@@ -80,9 +80,16 @@ const playersData = [
     typing_kana: "はちばん きゃっちゃー うみのたかし<br>せばんごう62 おかやまけんおかやまししゅっしん",
     bgm_file: "audio/umino_cut.mp3",
     bgm_delay_ms: 1000,
-    display_text_2: "8番 キャッチャー 海野隆司", 
-    typing_kana_2: "はちばん きゃっちゃー うみのたかし",
-    bgm_delay_ms_2: 1000
+    // 【2打席目：代打 中村晃 演出】
+    is_pinch_hitter: true,
+    pinch_hitter_intro_text: "8番 海野隆司に代わりまして",
+    pinch_hitter_intro_kana: "はちばん うみのたかしにかわりまして",
+    
+    // 中村晃選手は最初の打席扱いになるので、背番号と出身地を含めます
+    display_text_2: "中村晃<br>背番号7 埼玉県朝霞市出身",
+    typing_kana_2: "なかむらあきら<br>せばんごう7 さいたまけんあさかししゅっしん",
+    bgm_file_2: "audio/akira_cut.mp3",
+    bgm_delay_ms_2: 3000
   },
   {
     id: "player_nomura",
@@ -90,8 +97,14 @@ const playersData = [
     typing_kana: "きゅうばん しょーとすとっぷ のむらいさみ<br>せばんごう99 ひょうごけんこうべししゅっしん",
     bgm_file: "audio/isami_cut.mp3",
     bgm_delay_ms: 1000,
-    display_text_2: "9番 ショートストップ 野村勇", 
-    typing_kana_2: "きゅうばん しょーとすとっぷ のむらいさみ",
-    bgm_delay_ms_2: 1000
+    // ★【2打席目：代打 川瀬晃 追加】
+    is_pinch_hitter: true,
+    pinch_hitter_intro_text: "9番 野村勇に代わりまして",
+    pinch_hitter_intro_kana: "きゅうばん のむらいさみにかわりまして",
+    
+    display_text_2: "川瀬晃<br>背番号0 大分県大分市出身",
+    typing_kana_2: "かわせひかる<br>せばんごう0 おおいたけんおおいたししゅっしん",
+    bgm_file_2: "audio/kawase.mp3",
+    bgm_delay_ms_2: 2000
   }
 ];

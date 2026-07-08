@@ -16,8 +16,13 @@
     .typing-area { font-size: 2.2em; letter-spacing: 2px; margin-bottom: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold; word-break: normal; line-height: 1.6; padding: 0 20px; }
     .typed { color: #00e676; }
     .untyped { color: #ffffff; opacity: 0.5; }
-    button { padding: 15px 40px; font-size: 1.3em; cursor: pointer; background-color: #d32f2f; color: white; border: none; border-radius: 8px; font-weight: bold; transition: background-color 0.2s; }
+    button { padding: 15px 40px; font-size: 1.3em; cursor: pointer; background-color: #d32f2f; color: white; border: none; border-radius: 8px; font-weight: bold; transition: background-color 0.2s; margin: 0 10px; }
     button:hover { background-color: #b71c1c; }
+    
+    /* ★追加：2周目スタート用ボタンのデザイン */
+    .btn-secondary { background-color: #455a64; }
+    .btn-secondary:hover { background-color: #37474f; }
+
     .fade-enter-active, .fade-leave-active { transition: opacity 0.4s ease; }
     .fade-enter-from, .fade-leave-to { opacity: 0; }
   </style>
@@ -31,7 +36,10 @@
         <p style="font-size: 1.2em; margin-bottom: 30px;">
           登場曲が流れた後、選手紹介のアナウンスをタイピングしてください！
         </p>
-        <button @click="startGame">ゲームスタート</button>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+          <button @click="startGame(1)">第1打席からスタート</button>
+          <button @click="startGame(2)" class="btn-secondary">第2打席からテストプレイ</button>
+        </div>
       </div>
 
       <div v-else-if="gameState === 'playing'">
@@ -263,9 +271,10 @@
           }
         };
 
-        const startGame = () => {
+        // ★修正：引数で「何周目からスタートするか」を受け取るようにした
+        const startGame = (roundStart = 1) => {
           gameState.value = 'playing';
-          currentRound.value = 1;
+          currentRound.value = roundStart; 
           currentIndex.value = 0;
           window.addEventListener('keydown', handleKeydown);
           loadPlayer();
@@ -292,7 +301,6 @@
 
             try {
               currentAudio = new Audio(currentBgmFile.value);
-              // ★修正：内部で音量を30%に固定
               currentAudio.volume = 0.3;
               currentAudio.play().catch(e => console.warn("音声再生エラー:", e));
             } catch (error) {
@@ -306,6 +314,7 @@
             currentIndex.value++;
             loadPlayer();
           } else {
+            // ★修正：現在何周目かを基準に判定する（2周目スタートだった場合は1回で終わる）
             if (currentRound.value === 1) {
               currentRound.value = 2;
               currentIndex.value = 0;

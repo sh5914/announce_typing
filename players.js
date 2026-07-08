@@ -18,7 +18,7 @@ const playersData = [
     bgm_delay_ms: 1000,
     display_text_2: "2番 ライトフィールダー 柳町達", 
     typing_kana_2: "にばん らいとふぃーるだー やなぎまちたつる",
-    // bgm_file_2: "audio/yanagimachi2_cut.mp3", 
+    bgm_file_2: "audio/yanagimachi2_cut.mp3", 
     bgm_delay_ms_2: 1000
   },
   {
@@ -39,7 +39,7 @@ const playersData = [
     bgm_delay_ms: 1000,
     display_text_2: "4番 サードベースマン 栗原陵矢", 
     typing_kana_2: "よばん さーどべーすまん くりはらりょうや",
-    // bgm_file_2: "audio/kurihara2_cut.mp3", 
+    bgm_file_2: "audio/kurihara2_cut.mp3", 
     bgm_delay_ms_2: 1000
   },
   {
@@ -60,7 +60,7 @@ const playersData = [
     bgm_delay_ms: 1000,
     display_text_2: "6番 セカンドベースマン 牧原大成", 
     typing_kana_2: "ろくばん せかんどべーすまん まきはらたいせい",
-    // bgm_file_2: "audio/makihara2_cut.mp3", 
+    bgm_file_2: "audio/makihara2_cut.mp3", 
     bgm_delay_ms_2: 1000
   },
   {
@@ -71,7 +71,7 @@ const playersData = [
     bgm_delay_ms: 1000,
     display_text_2: "7番 センターフィールダー 周東右京", 
     typing_kana_2: "ななばん せんたーふぃーるだー しゅうとううきょう",
-    // bgm_file_2: "audio/shuto2_cut.mp3", 
+    bgm_file_2: "audio/shuto2_cut.mp3", 
     bgm_delay_ms_2: 1000
   },
   {

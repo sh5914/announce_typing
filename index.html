@@ -7,71 +7,16 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="./players.js"></script>
   <style>
-    body {
-      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-      background-color: #121212;
-      color: #ffffff;
-      text-align: center;
-      padding: 40px;
-    }
-    .game-container {
-      max-width: 900px;
-      margin: 0 auto;
-      background-color: #1e1e1e;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #121212; color: #ffffff; text-align: center; padding: 40px; }
+    .game-container { max-width: 900px; margin: 0 auto; background-color: #1e1e1e; padding: 40px; border-radius: 12px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
     h1 { color: #f5f5f5; }
-    .stadium-screen {
-      background-color: #000;
-      border: 6px solid #333;
-      height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-    .announcement-text {
-      font-size: 2.2em;
-      font-weight: bold;
-      color: #ffcc00;
-      text-shadow: 2px 2px 5px #000;
-      margin-bottom: 10px;
-    }
-    .typing-kana {
-      font-size: 1.4em;
-      color: #bbbbbb;
-    }
-    .typing-area {
-      font-size: 2.2em;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: bold;
-      
-      /* ★修正：途中でぶった切るのをやめて、単語（スペース）の区切りで綺麗に改行させる */
-      word-break: normal; 
-      line-height: 1.6;
-      padding: 0 20px;
-    }
+    .stadium-screen { background-color: #000; border: 6px solid #333; height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 30px; position: relative; overflow: hidden; border-radius: 8px; }
+    .announcement-text { font-size: 2.2em; font-weight: bold; color: #ffcc00; text-shadow: 2px 2px 5px #000; margin-bottom: 10px; }
+    .typing-kana { font-size: 1.4em; color: #bbbbbb; }
+    .typing-area { font-size: 2.2em; letter-spacing: 2px; margin-bottom: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold; word-break: normal; line-height: 1.6; padding: 0 20px; }
     .typed { color: #00e676; }
     .untyped { color: #ffffff; opacity: 0.5; }
-    button {
-      padding: 15px 40px;
-      font-size: 1.3em;
-      cursor: pointer;
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.2s;
-    }
+    button { padding: 15px 40px; font-size: 1.3em; cursor: pointer; background-color: #d32f2f; color: white; border: none; border-radius: 8px; font-weight: bold; transition: background-color 0.2s; }
     button:hover { background-color: #b71c1c; }
     .fade-enter-active, .fade-leave-active { transition: opacity 0.4s ease; }
     .fade-enter-from, .fade-leave-to { opacity: 0; }
@@ -90,6 +35,9 @@
       </div>
 
       <div v-else-if="gameState === 'playing'">
+        <div style="color: #ff9800; font-weight: bold; margin-bottom: 10px;">
+          【 第 {{ currentRound }} 打席 】
+        </div>
         <div class="stadium-screen">
           <transition name="fade">
             <div v-if="isIntroPlaying" style="color: #00e676; font-size: 1.5em; font-weight: bold;">
@@ -99,8 +47,8 @@
           
           <transition name="fade">
             <div v-if="showAnnouncement">
-              <div class="announcement-text" v-html="currentPlayer.display_text"></div>
-              <div class="typing-kana" v-html="currentPlayer.typing_kana"></div>
+              <div class="announcement-text" v-html="currentDisplayText"></div>
+              <div class="typing-kana" v-html="currentTypingKana"></div>
             </div>
           </transition>
         </div>
@@ -124,7 +72,7 @@
   <script>
     const { createApp, ref, computed, onUnmounted } = Vue;
 
-        const romajiMap = {
+    const romajiMap = {
       'あ':['a'], 'い':['i'], 'う':['u','wu'], 'え':['e'], 'お':['o'],
       'か':['ka','ca'], 'き':['ki'], 'く':['ku','cu','qu'], 'け':['ke'], 'こ':['ko','co'],
       'さ':['sa'], 'し':['shi','si','ci'], 'す':['su'], 'せ':['se','ce'], 'そ':['so'],
@@ -143,7 +91,6 @@
       'きゃ':['kya'], 'きゅ':['kyu'], 'きょ':['kyo'],
       'しゃ':['sha','sya'], 'しゅ':['shu','syu'], 'しょ':['sho','syo'],
       'ちゃ':['cha','tya','cya'], 'ちゅ':['chu','tyu','cyu'], 'ちょ':['cho','tyo','cyo'],
-      // ↓今回新しく追加した拗音（小さい文字）の完全版↓
       'にゃ':['nya'], 'にゅ':['nyu'], 'にょ':['nyo'],
       'ひゃ':['hya'], 'ひゅ':['hyu'], 'ひょ':['hyo'],
       'みゃ':['mya'], 'みゅ':['myu'], 'みょ':['myo'],
@@ -161,11 +108,8 @@
       '5':['5'], '6':['6'], '7':['7'], '8':['8'], '9':['9']
     };
 
-    
     const splitKana = (rawText) => {
-      // ★追加：<br>タグをスペースに変換して、タイピング処理ではスキップさせる
       const text = rawText.replace(/<br\s*\/?>/gi, ' ');
-      
       const chunks = [];
       for (let i = 0; i < text.length; i++) {
         let char = text[i];
@@ -189,9 +133,31 @@
         const gameState = ref('start');
         const isIntroPlaying = ref(false);
         const showAnnouncement = ref(false);
+        const currentRound = ref(1);
+
         const players = playersData; 
         const currentIndex = ref(0);
         const currentPlayer = computed(() => players[currentIndex.value]);
+        
+        const currentDisplayText = computed(() => {
+          return (currentRound.value === 2 && currentPlayer.value.display_text_2) 
+            ? currentPlayer.value.display_text_2 : currentPlayer.value.display_text;
+        });
+        
+        const currentTypingKana = computed(() => {
+          return (currentRound.value === 2 && currentPlayer.value.typing_kana_2) 
+            ? currentPlayer.value.typing_kana_2 : currentPlayer.value.typing_kana;
+        });
+
+        const currentBgmFile = computed(() => {
+          return (currentRound.value === 2 && currentPlayer.value.bgm_file_2) 
+            ? currentPlayer.value.bgm_file_2 : currentPlayer.value.bgm_file;
+        });
+
+        const currentBgmDelay = computed(() => {
+          return (currentRound.value === 2 && currentPlayer.value.bgm_delay_ms_2) 
+            ? currentPlayer.value.bgm_delay_ms_2 : currentPlayer.value.bgm_delay_ms;
+        });
         
         const kanaChunks = ref([]);
         const currentChunkIdx = ref(0);
@@ -204,7 +170,7 @@
         const getPathsForChunk = (index) => {
           if (index >= kanaChunks.value.length) return [];
           let chunk = kanaChunks.value[index];
-          if (chunk === ' ') return [' ']; // スペースのパス
+          if (chunk === ' ') return [' '];
           
           let paths = [...(romajiMap[chunk] || [chunk])];
           
@@ -241,13 +207,11 @@
           }
           for (let i = currentChunkIdx.value + 1; i < kanaChunks.value.length; i++) {
             let paths = getPathsForChunk(i);
-            // 表示上はスペースをノーブレークスペース等にすると綺麗ですが、今回は通常の半角スペース
             hint += (paths[0] === ' ') ? ' ' : paths[0];
           }
           return hint;
         });
 
-        // ★新機能：現在の文字がスペースだった場合、自動でスキップして表示上も進める
         const skipSpaces = () => {
           while (currentChunkIdx.value < kanaChunks.value.length && kanaChunks.value[currentChunkIdx.value] === ' ') {
             currentChunkIdx.value++;
@@ -260,10 +224,9 @@
           if (e.key.length > 1) return;
           e.preventDefault();
 
-          skipSpaces(); // 念のため入力前にもスキップチェック
-
+          skipSpaces();
           const key = e.key.toLowerCase();
-          if (key === ' ') return; // ★ユーザーが間違ってスペースを押しても無視する（ミスにならない）
+          if (key === ' ') return;
 
           const testBuffer = currentInputBuffer.value + key;
           const matchedPaths = validPaths.value.filter(p => p.startsWith(testBuffer));
@@ -275,8 +238,7 @@
             if (matchedPaths.some(p => p === testBuffer)) {
               currentChunkIdx.value++;
               currentInputBuffer.value = '';
-              
-              skipSpaces(); // ★文字を打ち終わった後、次にスペースがあれば一気にスキップ！
+              skipSpaces();
 
               if (currentChunkIdx.value < kanaChunks.value.length) {
                 validPaths.value = getPathsForChunk(currentChunkIdx.value);
@@ -303,6 +265,7 @@
 
         const startGame = () => {
           gameState.value = 'playing';
+          currentRound.value = 1;
           currentIndex.value = 0;
           window.addEventListener('keydown', handleKeydown);
           loadPlayer();
@@ -313,7 +276,7 @@
           isIntroPlaying.value = true;
           showAnnouncement.value = false;
           
-          kanaChunks.value = splitKana(currentPlayer.value.typing_kana);
+          kanaChunks.value = splitKana(currentTypingKana.value);
           currentChunkIdx.value = 0;
           currentInputBuffer.value = '';
           typedRomaji.value = '';
@@ -323,19 +286,19 @@
              validPaths.value = getPathsForChunk(currentChunkIdx.value);
           }
 
-          // ★修正：準備画面では音を鳴らさず、テキストが表示されるタイミングで音声を再生する
           timeoutId = setTimeout(() => {
             isIntroPlaying.value = false;
             showAnnouncement.value = true;
 
-            // 画面切り替えと同時に音楽スタート
             try {
-              currentAudio = new Audio(currentPlayer.value.bgm_file);
+              currentAudio = new Audio(currentBgmFile.value);
+              // ★修正：内部で音量を30%に固定
+              currentAudio.volume = 0.3;
               currentAudio.play().catch(e => console.warn("音声再生エラー:", e));
             } catch (error) {
               console.error("音声読み込みエラー:", error);
             }
-          }, currentPlayer.value.bgm_delay_ms); // players.jsで設定した秒数（2000なら2秒）だけ待機する
+          }, currentBgmDelay.value);
         };
 
         const nextPlayer = () => {
@@ -343,9 +306,15 @@
             currentIndex.value++;
             loadPlayer();
           } else {
-            stopCurrentAudio();
-            gameState.value = 'result';
-            window.removeEventListener('keydown', handleKeydown);
+            if (currentRound.value === 1) {
+              currentRound.value = 2;
+              currentIndex.value = 0;
+              loadPlayer();
+            } else {
+              stopCurrentAudio();
+              gameState.value = 'result';
+              window.removeEventListener('keydown', handleKeydown);
+            }
           }
         };
 
@@ -360,7 +329,8 @@
         });
 
         return {
-          gameState, isIntroPlaying, showAnnouncement, currentPlayer,
+          gameState, isIntroPlaying, showAnnouncement, 
+          currentRound, currentDisplayText,
           typedRomaji, untypedRomajiHint, startGame, resetGame
         };
       }

@@ -104,7 +104,7 @@ const playersData = [
     
     display_text_2: "川瀬晃<br>背番号0 大分県大分市出身",
     typing_kana_2: "かわせひかる<br>せばんごう0 おおいたけんおおいたししゅっしん",
-    bgm_file_2: "audio/kawase.mp3",
-    bgm_delay_ms_2: 2000
+    bgm_file_2: "audio/kawase_cut.mp3",
+    bgm_delay_ms_2: 3000
   }
 ];
